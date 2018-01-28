@@ -9,5 +9,6 @@
   "extends": ["eslint:recommended", "plugin:react/recommended"],
   "rules": {
     // overrides
+    "quotes": ["error", "single"]
   }
 }
