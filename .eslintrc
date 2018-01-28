@@ -1,0 +1,13 @@
+// based on: https://medium.com/the-react-native-log/getting-eslint-right-in-react-native-bd27524cc77b
+
+{
+  "parser": "babel-eslint",
+  "env": {
+    "react-native/react-native": true
+  },
+  "plugins": ["react", "react-native"],
+  "extends": ["eslint:recommended", "plugin:react/recommended"],
+  "rules": {
+    // overrides
+  }
+}
