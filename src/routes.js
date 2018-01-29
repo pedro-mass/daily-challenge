@@ -1,7 +1,7 @@
 import { StackNavigator } from 'react-navigation';
 
 import RNDefault from './screens/react-native-default';
-import DidYou from './screens/did-you';
+import CheckIn from './screens/check-in';
 
 const Navigator = StackNavigator(
   {
@@ -9,10 +9,7 @@ const Navigator = StackNavigator(
       screen: RNDefault
     },
     didYou: {
-      screen: DidYou,
-      navigationOptions: {
-        title: 'Did You?'
-      }
+      screen: CheckIn
     }
   },
   {

@@ -1,21 +1,23 @@
 import React from 'react';
-import { StyleSheet, View } from 'react-native';
+// import { StyleSheet } from 'react-native';
+import { Root } from 'native-base';
 
 import Navigator from './src/routes';
 
 export default class App extends React.Component {
   render() {
     return (
-      <View style={styles.container}>
+      // <Root style={styles.container}>
+      <Root>
         <Navigator />
-      </View>
+      </Root>
     );
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff'
-  }
-});
+// const styles = StyleSheet.create({
+//   container: {
+//     flex: 1,
+//     backgroundColor: '#fff'
+//   }
+// });
