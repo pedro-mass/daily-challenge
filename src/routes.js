@@ -1,19 +1,17 @@
 import { StackNavigator } from 'react-navigation';
 
 import RNDefault from './screens/react-native-default';
-import CheckIn from './screens/check-in';
+import { routes as checkInRoutes } from './screens/check-in/routes';
 
 const Navigator = StackNavigator(
   {
     rnDefault: {
       screen: RNDefault
     },
-    didYou: {
-      screen: CheckIn
-    }
+    ...checkInRoutes
   },
   {
-    initialRouteName: 'didYou'
+    initialRouteName: 'checkIn'
   }
 );
 

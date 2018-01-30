@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { View, Text } from 'react-native';
 import { Container, Content, Footer, Button } from 'native-base';
 
@@ -9,6 +10,10 @@ class DidYou extends React.Component {
     headerTitle: 'Check In'
   };
 
+  static propTypes = {
+    navigation: PropTypes.object
+  };
+
   defaultButtonProps = {
     large: true,
     block: true,
@@ -17,6 +22,8 @@ class DidYou extends React.Component {
   };
 
   render() {
+    const { navigate } = this.props.navigation;
+
     return (
       <Container>
         {/* <PrettyPrint {...this.props} /> */}
@@ -40,10 +47,18 @@ class DidYou extends React.Component {
           </View>
         </Content>
         <Footer>
-          <Button {...this.defaultButtonProps} primary>
+          <Button
+            {...this.defaultButtonProps}
+            primary
+            onPress={() => navigate('checkInSuccess')}
+          >
             <Text style={styles.buttonText}>YES</Text>
           </Button>
-          <Button {...this.defaultButtonProps} danger>
+          <Button
+            {...this.defaultButtonProps}
+            danger
+            onPress={() => navigate('checkInFail')}
+          >
             <Text style={styles.buttonText}>NO</Text>
           </Button>
         </Footer>
