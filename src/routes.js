@@ -1,14 +1,17 @@
-import { StackNavigator } from 'react-navigation';
+import { TabNavigator } from 'react-navigation';
 
-import RNDefault from './screens/react-native-default';
-import { routes as checkInRoutes } from './screens/check-in/routes';
+// import RNDefault from './screens/react-native-default';
+import CheckIn from './screens/check-in';
 
-const Navigator = StackNavigator(
+const Navigator = TabNavigator(
   {
-    rnDefault: {
-      screen: RNDefault
-    },
-    ...checkInRoutes
+    // rnDefault: {
+    //   screen: RNDefault
+    // },
+    // ...checkInRoutes
+    checkIn: {
+      screen: CheckIn
+    }
   },
   {
     initialRouteName: 'checkIn'

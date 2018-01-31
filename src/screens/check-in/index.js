@@ -2,8 +2,12 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { View, Text } from 'react-native';
 import { Container, Content, Footer, Button } from 'native-base';
+// import Modal from 'react-native-modal';
 
 // import PrettyPrint from '../components/pretty-print';
+// import Success from './success';
+// import Fail from './fail';
+import Modal from './modal';
 
 class DidYou extends React.Component {
   static navigationOptions = {
@@ -21,8 +25,13 @@ class DidYou extends React.Component {
     color: '#FFFFFF'
   };
 
+  state = {
+    isModalVisible: false,
+    modalContent: data.success
+  };
+
   render() {
-    const { navigate } = this.props.navigation;
+    // const { navigate } = this.props.navigation;
 
     return (
       <Container>
@@ -36,6 +45,12 @@ class DidYou extends React.Component {
             backgroundColor: 'white'
           }}
         >
+          <Modal
+            isVisible={this.state.isModalVisible}
+            {...this.state.modalContent}
+            onClose={this.toggleModal}
+          />
+
           <View style={styles.promptContainer}>
             <Text style={styles.prompt}>Did you do</Text>
           </View>
@@ -50,14 +65,14 @@ class DidYou extends React.Component {
           <Button
             {...this.defaultButtonProps}
             primary
-            onPress={() => navigate('checkInSuccess')}
+            onPress={() => this.showModal(true)}
           >
             <Text style={styles.buttonText}>YES</Text>
           </Button>
           <Button
             {...this.defaultButtonProps}
             danger
-            onPress={() => navigate('checkInFail')}
+            onPress={() => this.showModal(false)}
           >
             <Text style={styles.buttonText}>NO</Text>
           </Button>
@@ -65,7 +80,29 @@ class DidYou extends React.Component {
       </Container>
     );
   }
+
+  toggleModal = () =>
+    this.setState({ isModalVisible: !this.state.isModalVisible });
+
+  showModal(isSuccess) {
+    const modalContent = isSuccess ? data.success : data.fail;
+    this.setState({ modalContent });
+    this.setState({ isModalVisible: true });
+  }
 }
+
+const data = {
+  success: {
+    title: 'Long congrats',
+    message:
+      'message that\'s quite long asdjknasldnasldn nsaklnd aklsnd lkasnd lkans dklndaslkd nalks nlaksn dlkasn lkdsna'
+  },
+  fail: {
+    title: 'Booo',
+    message:
+      'message that\'s quite long asdjknasldnasldn nsaklnd aklsnd lkasnd lkans dklndaslkd nalks nlaksn dlkasn lkdsna'
+  }
+};
 
 const styles = {
   container: {},
