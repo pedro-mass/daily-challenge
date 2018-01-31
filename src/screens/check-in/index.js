@@ -48,7 +48,6 @@ class DidYou extends React.Component {
           <Modal
             isVisible={this.state.isModalVisible}
             {...this.state.modalContent}
-            onClose={this.toggleModal}
           />
 
           <View style={styles.promptContainer}>
@@ -80,9 +79,6 @@ class DidYou extends React.Component {
       </Container>
     );
   }
-
-  toggleModal = () =>
-    this.setState({ isModalVisible: !this.state.isModalVisible });
 
   showModal(isSuccess) {
     const modalContent = isSuccess ? data.success : data.fail;

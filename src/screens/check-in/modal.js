@@ -28,7 +28,7 @@ export default class Modal extends React.Component {
 
   render() {
     return (
-      <RNModal isVisible={this.props.isVisible}>
+      <RNModal isVisible={this.state.isVisible}>
         <View style={styles.container}>
           <View>
             <View style={styles.titleContainer}>
