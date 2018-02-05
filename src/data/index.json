@@ -1,0 +1,47 @@
+{
+  "plan": {
+    "name": "p90x3 - phase 1",
+    "activities": [
+      "Total Synergistics",
+      "Agility X",
+      "Yoga X",
+      "The Challenge",
+      "CVX",
+      "The Warrior",
+      "Rest or Dynamix"
+    ],
+    "repeatCount": 4,
+    "daySkipLimit": 2
+  },
+  "stats": {
+    "totalActivities": "28",
+    "startDate": "1516424400000",
+    "totalDays": 15,
+    "longestStreak": 7,
+    "currentStreak": 3,
+    "daysSkipped": 4,
+    "timesFailed": 2,
+    "activityStats": {
+      "Total Synergistics": {
+        "timesSucceeded": 5,
+        "timesSkipped": 2,
+        "timesFailed": 1
+      },
+      "Yoga X": {
+        "timesSucceeded": 4,
+        "timesSkipped": 3,
+        "timesFailed": 0
+      }
+    }
+  },
+  "logs": [
+    {
+      "timestamp": 1517539570991,
+      "wasCompleted": true
+    },
+    {
+      "timestamp": 1516424400000,
+      "wasCompleted": false
+    }
+  ]
+}
