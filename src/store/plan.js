@@ -1,4 +1,11 @@
-export const actionTypes = {};
+export const actionTypes = { UPDATE_PLAN: 'plan.UPDATE' };
+
+export function updatePlan(plan) {
+  return {
+    type: actionTypes.UPDATE_PLAN,
+    payload: plan
+  };
+}
 
 const INITIAL_STATE = {
   name: 'p90x3 - phase 1',
