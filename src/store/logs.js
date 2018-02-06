@@ -19,7 +19,7 @@ const INITIAL_STATE = {
   'cf69dc28-1b02-4692-9eae-418e5e29820e': {
     id: 'cf69dc28-1b02-4692-9eae-418e5e29820e',
     timestamp: 1517539570991,
-    activity: 'Total Synergistics',
+    activityId: '7dd0ebe5-a8f9-4849-8daf-d5ae0312927d',
     wasCompleted: true
   }
 };

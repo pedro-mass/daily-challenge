@@ -1,3 +1,4 @@
 import logs from './logs';
+import plan from './plan';
 
-export default { logs };
+export default { logs, plan };

@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
 
 import PrettyPrint from '../components/pretty-print';
 
@@ -28,4 +29,8 @@ const styles = {
   }
 };
 
-export default Logs;
+const mapStateToProps = ({ logs }) => {
+  return { logs };
+};
+
+export default connect(mapStateToProps)(Logs);
