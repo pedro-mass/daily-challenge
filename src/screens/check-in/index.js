@@ -2,11 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { View, Text } from 'react-native';
 import { Container, Content, Footer, Button } from 'native-base';
-// import Modal from 'react-native-modal';
 
-// import PrettyPrint from '../components/pretty-print';
-// import Success from './success';
-// import Fail from './fail';
 import Modal from './modal';
 
 class DidYou extends React.Component {
@@ -31,8 +27,6 @@ class DidYou extends React.Component {
   };
 
   render() {
-    // const { navigate } = this.props.navigation;
-
     return (
       <Container>
         {/* <PrettyPrint {...this.props} /> */}
