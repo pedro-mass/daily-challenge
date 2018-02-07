@@ -2,7 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { View, Text } from 'react-native';
 import { Container, Content, Footer, Button } from 'native-base';
+import { connect } from 'react-redux';
 
+import { addLog } from '../../store/logs';
 import Modal from './modal';
 
 class DidYou extends React.Component {
@@ -11,7 +13,19 @@ class DidYou extends React.Component {
   };
 
   static propTypes = {
-    navigation: PropTypes.object
+    navigation: PropTypes.object,
+    activity: PropTypes.shape({
+      id: PropTypes.string.isRequired,
+      name: PropTypes.string.isRequired
+    }),
+    addLog: PropTypes.func,
+  };
+
+  static defaultProps = {
+    activity: {
+      id: '7dd0ebe5-a8f9-4849-8daf-d5ae0312927d',
+      name: 'Total Synergistics'
+    }
   };
 
   defaultButtonProps = {
@@ -27,10 +41,10 @@ class DidYou extends React.Component {
   };
 
   render() {
+    const { activity } = this.props;
+
     return (
       <Container>
-        {/* <PrettyPrint {...this.props} /> */}
-
         <Content
           contentContainerStyle={{
             flex: 1,
@@ -48,7 +62,9 @@ class DidYou extends React.Component {
             <Text style={styles.prompt}>Did you do</Text>
           </View>
           <View style={{ ...styles.promptContainer, flex: 2 }}>
-            <Text style={{ ...styles.prompt, fontSize: 30 }}>[Activity X]</Text>
+            <Text style={{ ...styles.prompt, fontSize: 30 }}>
+              {activity.name}
+            </Text>
           </View>
           <View style={styles.promptContainer}>
             <Text style={styles.prompt}>today?</Text>
@@ -58,14 +74,14 @@ class DidYou extends React.Component {
           <Button
             {...this.defaultButtonProps}
             primary
-            onPress={() => this.showModal(true)}
+            onPress={() => this.checkIn(activity, true)}
           >
             <Text style={styles.buttonText}>YES</Text>
           </Button>
           <Button
             {...this.defaultButtonProps}
             danger
-            onPress={() => this.showModal(false)}
+            onPress={() => this.checkIn(activity, false)}
           >
             <Text style={styles.buttonText}>NO</Text>
           </Button>
@@ -74,10 +90,10 @@ class DidYou extends React.Component {
     );
   }
 
-  showModal(isSuccess) {
+  checkIn(activity, isSuccess) {
     const modalContent = isSuccess ? data.success : data.fail;
-    this.setState({ modalContent });
-    this.setState({ isModalVisible: true });
+    this.setState({ modalContent, isModalVisible: true });
+    this.props.addLog(activity, isSuccess);
   }
 }
 
@@ -113,4 +129,4 @@ const styles = {
   }
 };
 
-export default DidYou;
+export default connect(null, { addLog })(DidYou);
