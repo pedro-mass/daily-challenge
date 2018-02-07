@@ -1,23 +1,18 @@
 import React from 'react';
-// import { StyleSheet } from 'react-native';
 import { Root } from 'native-base';
+// Root: gives us actionSheets to be able to be called from anywhere
 
+import Store from './src/store';
 import Navigator from './src/routes';
 
 export default class App extends React.Component {
   render() {
     return (
-      // <Root style={styles.container}>
-      <Root>
-        <Navigator />
-      </Root>
+      <Store>
+        <Root>
+          <Navigator />
+        </Root>
+      </Store>
     );
   }
 }
-
-// const styles = StyleSheet.create({
-//   container: {
-//     flex: 1,
-//     backgroundColor: '#fff'
-//   }
-// });
