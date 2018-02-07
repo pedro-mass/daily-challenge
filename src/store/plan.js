@@ -45,6 +45,8 @@ const INITIAL_STATE = {
 
 export default function reducer(state = INITIAL_STATE, action = {}) {
   switch (action.type) {
+    case actionTypes.UPDATE_PLAN:
+      return Object.assign(state, action.payload);
     default:
       return state;
   }
