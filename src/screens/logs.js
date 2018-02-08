@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Text } from 'react-native';
+import { Text, ListView } from 'react-native';
 import {
   Container,
   Header,
@@ -9,8 +9,12 @@ import {
   List,
   ListItem,
   Left,
-  Body
+  Body,
+  Button,
+  Icon
 } from 'native-base';
+
+import { deleteLog } from '../store/logs';
 
 class Logs extends Component {
   static displayName = 'Logs';
@@ -26,19 +30,46 @@ class Logs extends Component {
           name: PropTypes.string
         })
       })
-    )
+    ),
+    deleteLog: PropTypes.func
   };
 
   static defaultProps = {
     logs: []
   };
 
+  // constructor(props) {
+  //   super(props);
+
+  //   this.state = {
+  //     logs: props.logs
+  //   };
+  // }
+
+  // componentWillReceiveProps(nextProps) {
+  //   if (nextProps.logs !== this.state.logs) {
+  //     this.setState({ logs: nextProps.logs });
+  //   }
+  // }
+
   render() {
+    const ds = new ListView.DataSource({
+      rowHasChanged: (r1, r2) => r1 !== r2
+    });
+
     return (
       <Container>
         <Header />
         <Content contentContainerStyle={styles.content}>
-          <List dataArray={this.props.logs} renderRow={this.renderLog} />
+          <List
+            dataSource={ds.cloneWithRows(this.props.logs)}
+            renderRow={this.renderLog}
+            renderLeftHiddenRow={this.renderLeftHiddenRow}
+            renderRightHiddenRow={this.renderRightHiddenRow}
+            leftOpenValue={75}
+            rightOpenValue={-75}
+            enableEmptySections
+          />
         </Content>
       </Container>
     );
@@ -55,6 +86,26 @@ class Logs extends Component {
         </Body>
       </ListItem>
     );
+  }
+
+  renderLeftHiddenRow = log => {
+    return (
+      <Button full onPress={() => alert(JSON.stringify(log))}>
+        <Icon active name="information-circle" />
+      </Button>
+    );
+  };
+
+  renderRightHiddenRow = log => {
+    return (
+      <Button full danger onPress={() => this.deleteRow(log)}>
+        <Icon active name="trash" />
+      </Button>
+    );
+  };
+
+  deleteRow(log) {
+    this.props.deleteLog(log);
   }
 }
 
@@ -76,4 +127,4 @@ const mapStateToProps = ({ logs, plan }) => {
   return { logs: logsToUse };
 };
 
-export default connect(mapStateToProps)(Logs);
+export default connect(mapStateToProps, { deleteLog })(Logs);
