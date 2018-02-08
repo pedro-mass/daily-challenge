@@ -7,7 +7,9 @@ import { connect } from 'react-redux';
 import { addLog } from '../../store/logs';
 import Modal from './modal';
 
-class DidYou extends React.Component {
+class CheckIn extends React.Component {
+  static displayName = 'CheckIn';
+
   static navigationOptions = {
     headerTitle: 'Check In'
   };
@@ -18,7 +20,7 @@ class DidYou extends React.Component {
       id: PropTypes.string.isRequired,
       name: PropTypes.string.isRequired
     }),
-    addLog: PropTypes.func,
+    addLog: PropTypes.func
   };
 
   static defaultProps = {
@@ -129,4 +131,4 @@ const styles = {
   }
 };
 
-export default connect(null, { addLog })(DidYou);
+export default connect(null, { addLog })(CheckIn);
