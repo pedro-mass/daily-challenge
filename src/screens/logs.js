@@ -38,20 +38,6 @@ class Logs extends Component {
     logs: []
   };
 
-  // constructor(props) {
-  //   super(props);
-
-  //   this.state = {
-  //     logs: props.logs
-  //   };
-  // }
-
-  // componentWillReceiveProps(nextProps) {
-  //   if (nextProps.logs !== this.state.logs) {
-  //     this.setState({ logs: nextProps.logs });
-  //   }
-  // }
-
   render() {
     const ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2
@@ -59,6 +45,7 @@ class Logs extends Component {
 
     return (
       <Container>
+        {/* Temporary header. Not sure if we'll keep it, but it does gives us a nice top margin */}
         <Header />
         <Content contentContainerStyle={styles.content}>
           <List
