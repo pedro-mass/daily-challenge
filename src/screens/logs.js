@@ -76,6 +76,7 @@ class Logs extends Component {
   }
 
   renderLeftHiddenRow = log => {
+    // note: placeholder for editing a log.
     return (
       <Button full onPress={() => alert(JSON.stringify(log))}>
         <Icon active name="information-circle" />
