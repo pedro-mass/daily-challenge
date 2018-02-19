@@ -12,11 +12,11 @@ const loggerMiddleware = createLogger({
   predicate: () => __DEV__
 });
 
+const engine = createEngine('my-save-key');
+const engineMiddleware = storage.createMiddleware(engine);
+
 export default function configureStore(initialState) {
   const reducer = storage.reducer(combineReducers(reducers));
-
-  const engine = createEngine('my-save-key');
-  const engineMiddleware = storage.createMiddleware(engine);
 
   const enhancers = compose(
     applyMiddleware(thunkMiddleware, loggerMiddleware, engineMiddleware)
