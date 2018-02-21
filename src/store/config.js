@@ -4,18 +4,20 @@ import { createLogger } from 'redux-logger';
 
 import * as storage from 'redux-storage';
 import createEngine from 'redux-storage-engine-reactnativeasyncstorage';
+import { key } from '../services/local-storage';
 
 import reducers from './reducers';
 
 // creates the logger only for dev
 const loggerMiddleware = createLogger({
-  predicate: () => __DEV__
+  // predicate: () => __DEV__
+  predicate: () => false
 });
 
 export default function configureStore(initialState) {
   const reducer = storage.reducer(combineReducers(reducers));
 
-  const engine = createEngine('my-save-key');
+  const engine = createEngine(key);
   const engineMiddleware = storage.createMiddleware(engine);
 
   const enhancers = compose(

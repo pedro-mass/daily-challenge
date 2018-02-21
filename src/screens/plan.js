@@ -6,6 +6,7 @@ import { Button } from 'native-base';
 
 import PrettyPrint from '../components/pretty-print';
 import { updatePlan } from '../store/plan';
+import { hardReset } from '../services/local-storage';
 
 class Plan extends Component {
   static displayName = 'Plan';
@@ -21,8 +22,8 @@ class Plan extends Component {
       <View style={styles.container}>
         <Text>Plan</Text>
 
-        <Button onPress={() => this.props.updatePlan(this.props.plan)}>
-          <Text>Update Plan</Text>
+        <Button onPress={() => hardReset()}>
+          <Text>Reset Local Storage</Text>
         </Button>
 
         <PrettyPrint {...this.props} />
