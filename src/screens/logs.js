@@ -1,36 +1,118 @@
 import React, { Component } from 'react';
-import { View, Text } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { Text, ListView } from 'react-native';
+import {
+  Container,
+  Header,
+  Content,
+  List,
+  ListItem,
+  Left,
+  Body,
+  Button,
+  Icon
+} from 'native-base';
 
-import PrettyPrint from '../components/pretty-print';
+import { deleteLog } from '../store/logs';
 
 class Logs extends Component {
   static displayName = 'Logs';
 
   static propTypes = {
-    name: PropTypes.string
+    logs: PropTypes.arrayOf(
+      PropTypes.shape({
+        id: PropTypes.string.isRequired,
+        timestamp: PropTypes.number.isRequired,
+        wasCompleted: PropTypes.bool,
+        activity: PropTypes.shape({
+          id: PropTypes.string.isRequired,
+          name: PropTypes.string
+        })
+      })
+    ),
+    deleteLog: PropTypes.func
+  };
+
+  static defaultProps = {
+    logs: []
   };
 
   render() {
-    return (
-      <View style={styles.container}>
-        <Text>Logs</Text>
+    const ds = new ListView.DataSource({
+      rowHasChanged: (r1, r2) => r1 !== r2
+    });
 
-        <PrettyPrint {...this.props} />
-      </View>
+    return (
+      <Container>
+        {/* Temporary header. Not sure if we'll keep it, but it does gives us a nice top margin */}
+        <Header />
+        <Content contentContainerStyle={styles.content}>
+          <List
+            dataSource={ds.cloneWithRows(this.props.logs)}
+            renderRow={this.renderLog}
+            renderLeftHiddenRow={this.renderLeftHiddenRow}
+            renderRightHiddenRow={this.renderRightHiddenRow}
+            leftOpenValue={75}
+            rightOpenValue={-75}
+            enableEmptySections
+          />
+        </Content>
+      </Container>
     );
+  }
+
+  renderLog(log) {
+    return (
+      <ListItem key={log.id}>
+        <Left>
+          <Text>{log.timestamp}</Text>
+        </Left>
+        <Body>
+          <Text>{log.activity.name}</Text>
+        </Body>
+      </ListItem>
+    );
+  }
+
+  renderLeftHiddenRow = log => {
+    // note: placeholder for editing a log.
+    return (
+      <Button full onPress={() => alert(JSON.stringify(log))}>
+        <Icon active name="information-circle" />
+      </Button>
+    );
+  };
+
+  renderRightHiddenRow = log => {
+    return (
+      <Button full danger onPress={() => this.deleteRow(log)}>
+        <Icon active name="trash" />
+      </Button>
+    );
+  };
+
+  deleteRow(log) {
+    this.props.deleteLog(log);
   }
 }
 
 const styles = {
-  container: {
-    marginTop: 20
+  content: {
+    // flex: 1,
+    // flexDirection: 'column'
+    // marginTop: 20
   }
 };
 
-const mapStateToProps = ({ logs }) => {
-  return { logs };
+const mapStateToProps = ({ logs, plan }) => {
+  const logsToUse = Object.values(logs).map(log => {
+    log.activity = plan.activities[log.activityId];
+
+    return log;
+  });
+
+  return { logs: logsToUse };
 };
 
-export default connect(mapStateToProps)(Logs);
+export default connect(mapStateToProps, { deleteLog })(Logs);
