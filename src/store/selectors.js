@@ -13,3 +13,23 @@ export const getFilledLogs = createSelector(
     });
   }
 );
+
+export const getLatestLog = createSelector([getLogs], logs => {
+  logs = Object.values(logs);
+  return logs && logs.length > 0 ? logs[logs.length - 1] : null;
+});
+
+export const getTodaysActivity = createSelector(
+  [getLatestLog, getActivities],
+  (latestLog, activities) => {
+    if (!latestLog) {
+      return Object.values(activities)[0];
+    }
+
+    return {
+      id: '7dd0ebe5-a8f9-4849-8daf-d5ae0312927d',
+      name: 'Total Synergistics2',
+      wasCompleted: false
+    };
+  }
+);

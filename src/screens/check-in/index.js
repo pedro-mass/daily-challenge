@@ -5,6 +5,7 @@ import { Container, Content, Footer, Button } from 'native-base';
 import { connect } from 'react-redux';
 
 import { addLog } from '../../store/logs';
+import { getTodaysActivity } from '../../store/selectors';
 import Modal from './modal';
 
 class CheckIn extends React.Component {
@@ -18,16 +19,10 @@ class CheckIn extends React.Component {
     navigation: PropTypes.object,
     activity: PropTypes.shape({
       id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired
+      name: PropTypes.string.isRequired,
+      wasCompleted: PropTypes.bool
     }),
     addLog: PropTypes.func
-  };
-
-  static defaultProps = {
-    activity: {
-      id: '7dd0ebe5-a8f9-4849-8daf-d5ae0312927d',
-      name: 'Total Synergistics'
-    }
   };
 
   defaultButtonProps = {
@@ -131,4 +126,8 @@ const styles = {
   }
 };
 
-export default connect(null, { addLog })(CheckIn);
+function mapStateToProps(state) {
+  return { activity: getTodaysActivity(state) };
+}
+
+export default connect(mapStateToProps, { addLog })(CheckIn);
