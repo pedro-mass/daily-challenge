@@ -10,6 +10,7 @@ import {
   ListItem,
   Left,
   Body,
+  Right,
   Button,
   Icon
 } from 'native-base';
@@ -41,6 +42,8 @@ class Logs extends Component {
   };
 
   render() {
+    console.log('props:', this.props.logs);
+
     const ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2
     });
@@ -73,9 +76,14 @@ class Logs extends Component {
         <Body>
           <Text>{log.activity.name}</Text>
         </Body>
+        <Right>{this.renderWasCompleted(log.wasCompleted)}</Right>
       </ListItem>
     );
   };
+
+  renderWasCompleted(wasCompleted) {
+    return <Text>{wasCompleted ? 'yes' : 'no'}</Text>;
+  }
 
   renderLeftHiddenRow = log => {
     // note: placeholder for editing a log.
