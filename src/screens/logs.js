@@ -15,6 +15,7 @@ import {
 } from 'native-base';
 
 import { deleteLog } from '../store/logs';
+import { getFilledLogs } from '../store/selectors';
 
 class Logs extends Component {
   static displayName = 'Logs';
@@ -105,14 +106,8 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ logs, plan }) => {
-  const logsToUse = Object.values(logs).map(log => {
-    log.activity = plan.activities[log.activityId];
-
-    return log;
-  });
-
-  return { logs: logsToUse };
+const mapStateToProps = state => {
+  return { logs: getFilledLogs(state) };
 };
 
 export default connect(mapStateToProps, { deleteLog })(Logs);
