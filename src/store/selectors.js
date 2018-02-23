@@ -1,5 +1,7 @@
 import { createSelector } from 'reselect';
 
+import moment from 'moment';
+
 const getActivities = state => state.plan.activities;
 const getLogs = state => state.logs;
 
@@ -26,10 +28,15 @@ export const getTodaysActivity = createSelector(
       return Object.values(activities)[0];
     }
 
-    return {
-      id: '7dd0ebe5-a8f9-4849-8daf-d5ae0312927d',
-      name: 'Total Synergistics2',
-      wasCompleted: false
-    };
+    if (moment().isSame(latestLog.timestamp, 'day')) {
+      return latestLog.activity;
+    }
+
+    const activityKeyArray = Object.keys(activities);
+    const currentActivityIndex = activityKeyArray.indexOf(latestLog.activityId);
+    const nextActivityIndex =
+      (currentActivityIndex + 1) % activityKeyArray.length;
+
+    return activities[activityKeyArray[nextActivityIndex]];
   }
 );

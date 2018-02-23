@@ -40,16 +40,17 @@ class CheckIn extends React.Component {
   render() {
     const { activity } = this.props;
 
+    // todo: check logic for not having an activity yet
+    if (!activity) return null;
+
+    // todo: check wasCompleted logic. Still displaying the activity for some reason.
+    if (activity.wasCompleted !== undefined) {
+      return this.renderCompletedScreen(activity);
+    }
+
     return (
       <Container>
-        <Content
-          contentContainerStyle={{
-            flex: 1,
-            flexDirection: 'column',
-            alignItems: 'center',
-            backgroundColor: 'white'
-          }}
-        >
+        <Content contentContainerStyle={styles.content}>
           <Modal
             isVisible={this.state.isModalVisible}
             {...this.state.modalContent}
@@ -87,10 +88,25 @@ class CheckIn extends React.Component {
     );
   }
 
+  renderCompletedScreen(activity) {
+    return (
+      <Container>
+        <Content contentContainerStyle={styles.content}>
+          <View style={styles.promptContainer}>
+            <Text style={styles.completedText}>
+              Todays Done! You {activity.wasCompleted ? 'did' : 'failed at'}{' '}
+              it!
+            </Text>
+          </View>
+        </Content>
+      </Container>
+    );
+  }
+
   checkIn(activity, isSuccess) {
     const modalContent = isSuccess ? data.success : data.fail;
     this.setState({ modalContent, isModalVisible: true });
-    this.props.addLog(activity, isSuccess);
+    this.props.addLog(activity, { wasCompleted: isSuccess });
   }
 }
 
@@ -109,7 +125,12 @@ const data = {
 
 const styles = {
   container: {},
-  content: {},
+  content: {
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    backgroundColor: 'white'
+  },
   actions: {},
   promptContainer: {
     flex: 1,
@@ -117,6 +138,10 @@ const styles = {
   },
   prompt: {
     fontSize: 20
+  },
+  completedText: {
+    fontSize: 40,
+    textAlign: 'center'
   },
   button: {
     flex: 1
