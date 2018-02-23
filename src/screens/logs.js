@@ -13,6 +13,7 @@ import {
   Button,
   Icon
 } from 'native-base';
+import moment from 'moment';
 
 import { deleteLog } from '../store/logs';
 import { getFilledLogs } from '../store/selectors';
@@ -63,18 +64,18 @@ class Logs extends Component {
     );
   }
 
-  renderLog(log) {
+  renderLog = log => {
     return (
       <ListItem key={log.id}>
         <Left>
-          <Text>{log.timestamp}</Text>
+          <Text>{this.renderTimestamp(log.timestamp)}</Text>
         </Left>
         <Body>
           <Text>{log.activity.name}</Text>
         </Body>
       </ListItem>
     );
-  }
+  };
 
   renderLeftHiddenRow = log => {
     // note: placeholder for editing a log.
@@ -93,8 +94,12 @@ class Logs extends Component {
     );
   };
 
-  deleteRow(log) {
+  deleteRow = log => {
     this.props.deleteLog(log);
+  };
+
+  renderTimestamp(timestamp) {
+    return moment(timestamp).format('MM/DD/YY LT');
   }
 }
 
