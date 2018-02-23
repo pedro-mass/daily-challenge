@@ -16,7 +16,7 @@ export const getFilledLogs = createSelector(
   }
 );
 
-export const getLatestLog = createSelector([getLogs], logs => {
+export const getLatestLog = createSelector([getFilledLogs], logs => {
   logs = Object.values(logs);
   return logs && logs.length > 0 ? logs[logs.length - 1] : null;
 });
