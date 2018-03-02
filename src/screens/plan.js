@@ -2,32 +2,49 @@ import React, { Component } from 'react';
 import { View, Text } from 'react-native';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Button } from 'native-base';
+import {
+  Container,
+  Header,
+  Body,
+  Content,
+  Form,
+  Item,
+  Input,
+  Label
+} from 'native-base';
 
-import PrettyPrint from '../components/pretty-print';
 import { updatePlan } from '../store/plan';
-import { hardReset } from '../services/local-storage';
 
 class Plan extends Component {
   static displayName = 'Plan';
 
   static propTypes = {
-    name: PropTypes.string,
     updatePlan: PropTypes.func.isRequired,
-    plan: PropTypes.object
+    plan: PropTypes.shape({
+      name: PropTypes.string
+    })
   };
 
   render() {
     return (
-      <View style={styles.container}>
-        <Text>Plan</Text>
-
-        <Button onPress={() => hardReset()}>
-          <Text>Reset Local Storage</Text>
-        </Button>
-
-        <PrettyPrint {...this.props} />
-      </View>
+      <Container>
+        <Header>
+          <Body>
+            <Text>{this.props.plan.name}</Text>
+          </Body>
+        </Header>
+        <Content>
+          <Form>
+            <Item inlineLabel>
+              <Label>Plan Name</Label>
+              <Input
+                placehold={this.props.plan.name}
+                value={this.props.plan.name}
+              />
+            </Item>
+          </Form>
+        </Content>
+      </Container>
     );
   }
 }

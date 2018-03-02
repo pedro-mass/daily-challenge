@@ -18,7 +18,7 @@ const Navigator = TabNavigator(
     }
   },
   {
-    initialRouteName: 'checkIn'
+    initialRouteName: 'plan'
   }
 );
 
