@@ -33,7 +33,6 @@ class Plan extends Component {
   };
 
   componentWillReceiveProps(nextProps) {
-    console.log('next: ', nextProps);
     if (this.props.plan != nextProps.plan) {
       this.initializeState(nextProps);
     }
@@ -84,6 +83,7 @@ class Plan extends Component {
   };
 
   saveForm = () => {
+    // TODO: Not updating props
     this.props.updatePlan(this.state);
   };
 }
@@ -114,7 +114,6 @@ const styles = {
 };
 
 const mapStateToProps = ({ plan }) => {
-  console.log('mstp', plan.name);
   return { plan };
 };
 
