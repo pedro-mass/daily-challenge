@@ -40,10 +40,8 @@ class CheckIn extends React.Component {
   render() {
     const { activity } = this.props;
 
-    // todo: check logic for not having an activity yet
-    if (!activity) return null;
+    if (!activity) return this.renderLoadingScreen();
 
-    // todo: check wasCompleted logic. Still displaying the activity for some reason.
     if (activity.wasCompleted !== undefined) {
       return this.renderCompletedScreen(activity);
     }
@@ -89,15 +87,24 @@ class CheckIn extends React.Component {
   }
 
   renderCompletedScreen(activity) {
+    return this.renderCenteredNode(
+      <Text style={styles.centeredText}>
+        Todays Done! You {activity.wasCompleted ? 'did' : 'failed at'} it!
+      </Text>
+    );
+  }
+
+  renderLoadingScreen() {
+    return this.renderCenteredNode(
+      <Text style={styles.centeredText}>Loading...</Text>
+    );
+  }
+
+  renderCenteredNode(node) {
     return (
       <Container>
         <Content contentContainerStyle={styles.content}>
-          <View style={styles.promptContainer}>
-            <Text style={styles.completedText}>
-              Todays Done! You {activity.wasCompleted ? 'did' : 'failed at'}{' '}
-              it!
-            </Text>
-          </View>
+          <View style={styles.promptContainer}>{node}</View>
         </Content>
       </Container>
     );
@@ -139,7 +146,7 @@ const styles = {
   prompt: {
     fontSize: 20
   },
-  completedText: {
+  centeredText: {
     fontSize: 40,
     textAlign: 'center'
   },

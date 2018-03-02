@@ -39,8 +39,7 @@ const INITIAL_STATE = {
       name: 'Rest or Dynamix'
     }
   },
-  repeatCount: 4,
-  daySkipLimit: 2
+  repeatCount: 4
 };
 
 export default function reducer(state = INITIAL_STATE, action = {}) {

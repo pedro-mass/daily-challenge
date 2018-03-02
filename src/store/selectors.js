@@ -29,7 +29,7 @@ export const getTodaysActivity = createSelector(
     }
 
     if (moment().isSame(latestLog.timestamp, 'day')) {
-      return latestLog.activity;
+      return { ...latestLog.activity, wasCompleted: latestLog.wasCompleted };
     }
 
     const activityKeyArray = Object.keys(activities);

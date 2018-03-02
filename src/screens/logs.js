@@ -42,8 +42,6 @@ class Logs extends Component {
   };
 
   render() {
-    console.log('props:', this.props.logs);
-
     const ds = new ListView.DataSource({
       rowHasChanged: (r1, r2) => r1 !== r2
     });
