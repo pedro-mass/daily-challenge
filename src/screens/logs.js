@@ -10,11 +10,14 @@ import {
   ListItem,
   Left,
   Body,
+  Right,
   Button,
   Icon
 } from 'native-base';
+import moment from 'moment';
 
 import { deleteLog } from '../store/logs';
+import { getFilledLogs } from '../store/selectors';
 
 class Logs extends Component {
   static displayName = 'Logs';
@@ -62,17 +65,22 @@ class Logs extends Component {
     );
   }
 
-  renderLog(log) {
+  renderLog = log => {
     return (
       <ListItem key={log.id}>
         <Left>
-          <Text>{log.timestamp}</Text>
+          <Text>{this.renderTimestamp(log.timestamp)}</Text>
         </Left>
         <Body>
           <Text>{log.activity.name}</Text>
         </Body>
+        <Right>{this.renderWasCompleted(log.wasCompleted)}</Right>
       </ListItem>
     );
+  };
+
+  renderWasCompleted(wasCompleted) {
+    return <Text>{wasCompleted ? 'yes' : 'no'}</Text>;
   }
 
   renderLeftHiddenRow = log => {
@@ -92,8 +100,12 @@ class Logs extends Component {
     );
   };
 
-  deleteRow(log) {
+  deleteRow = log => {
     this.props.deleteLog(log);
+  };
+
+  renderTimestamp(timestamp) {
+    return moment(timestamp).format('MM/DD/YY LT');
   }
 }
 
@@ -105,14 +117,8 @@ const styles = {
   }
 };
 
-const mapStateToProps = ({ logs, plan }) => {
-  const logsToUse = Object.values(logs).map(log => {
-    log.activity = plan.activities[log.activityId];
-
-    return log;
-  });
-
-  return { logs: logsToUse };
+const mapStateToProps = state => {
+  return { logs: getFilledLogs(state) };
 };
 
 export default connect(mapStateToProps, { deleteLog })(Logs);

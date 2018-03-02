@@ -5,6 +5,7 @@ import { Container, Content, Footer, Button } from 'native-base';
 import { connect } from 'react-redux';
 
 import { addLog } from '../../store/logs';
+import { getTodaysActivity } from '../../store/selectors';
 import Modal from './modal';
 
 class CheckIn extends React.Component {
@@ -18,16 +19,10 @@ class CheckIn extends React.Component {
     navigation: PropTypes.object,
     activity: PropTypes.shape({
       id: PropTypes.string.isRequired,
-      name: PropTypes.string.isRequired
+      name: PropTypes.string.isRequired,
+      wasCompleted: PropTypes.bool
     }),
     addLog: PropTypes.func
-  };
-
-  static defaultProps = {
-    activity: {
-      id: '7dd0ebe5-a8f9-4849-8daf-d5ae0312927d',
-      name: 'Total Synergistics'
-    }
   };
 
   defaultButtonProps = {
@@ -45,16 +40,15 @@ class CheckIn extends React.Component {
   render() {
     const { activity } = this.props;
 
+    if (!activity) return this.renderLoadingScreen();
+
+    if (activity.wasCompleted !== undefined) {
+      return this.renderCompletedScreen(activity);
+    }
+
     return (
       <Container>
-        <Content
-          contentContainerStyle={{
-            flex: 1,
-            flexDirection: 'column',
-            alignItems: 'center',
-            backgroundColor: 'white'
-          }}
-        >
+        <Content contentContainerStyle={styles.content}>
           <Modal
             isVisible={this.state.isModalVisible}
             {...this.state.modalContent}
@@ -92,10 +86,34 @@ class CheckIn extends React.Component {
     );
   }
 
+  renderCompletedScreen(activity) {
+    return this.renderCenteredNode(
+      <Text style={styles.centeredText}>
+        Todays Done! You {activity.wasCompleted ? 'did' : 'failed at'} it!
+      </Text>
+    );
+  }
+
+  renderLoadingScreen() {
+    return this.renderCenteredNode(
+      <Text style={styles.centeredText}>Loading...</Text>
+    );
+  }
+
+  renderCenteredNode(node) {
+    return (
+      <Container>
+        <Content contentContainerStyle={styles.content}>
+          <View style={styles.promptContainer}>{node}</View>
+        </Content>
+      </Container>
+    );
+  }
+
   checkIn(activity, isSuccess) {
     const modalContent = isSuccess ? data.success : data.fail;
     this.setState({ modalContent, isModalVisible: true });
-    this.props.addLog(activity, isSuccess);
+    this.props.addLog(activity, { wasCompleted: isSuccess });
   }
 }
 
@@ -114,7 +132,12 @@ const data = {
 
 const styles = {
   container: {},
-  content: {},
+  content: {
+    flex: 1,
+    flexDirection: 'column',
+    alignItems: 'center',
+    backgroundColor: 'white'
+  },
   actions: {},
   promptContainer: {
     flex: 1,
@@ -122,6 +145,10 @@ const styles = {
   },
   prompt: {
     fontSize: 20
+  },
+  centeredText: {
+    fontSize: 40,
+    textAlign: 'center'
   },
   button: {
     flex: 1
@@ -131,4 +158,8 @@ const styles = {
   }
 };
 
-export default connect(null, { addLog })(CheckIn);
+function mapStateToProps(state) {
+  return { activity: getTodaysActivity(state) };
+}
+
+export default connect(mapStateToProps, { addLog })(CheckIn);

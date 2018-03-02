@@ -6,14 +6,14 @@ export const actionTypes = {
   DELETE_LOG: 'logs.DELETE_LOG'
 };
 
-export function addLog({ id }, wasCompleted) {
+export function addLog({ id }, { timestamp, wasCompleted }) {
   return {
     type: actionTypes.ADD_LOG,
     payload: {
       id: generateId(),
-      timestamp: moment().valueOf(),
+      timestamp: timestamp || moment().valueOf(),
       activityId: id,
-      wasCompleted
+      wasCompleted: wasCompleted || false
     }
   };
 }
