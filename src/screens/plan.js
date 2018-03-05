@@ -4,8 +4,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {
   Container,
-  Header,
-  Body,
   Footer,
   Content,
   Form,
@@ -16,6 +14,7 @@ import {
 } from 'native-base';
 
 import PrettyPrint from '../components/pretty-print';
+import PlanHeader from './components/plan-header';
 import { updatePlan } from '../store/plan';
 
 class Plan extends Component {
@@ -43,11 +42,7 @@ class Plan extends Component {
   render() {
     return (
       <Container>
-        <Header>
-          <Body>
-            <Text>{this.props.plan.name}</Text>
-          </Body>
-        </Header>
+        <PlanHeader />
         <Content>
           <Form>
             <Item inlineLabel>
@@ -59,6 +54,7 @@ class Plan extends Component {
               />
             </Item>
           </Form>
+          <PrettyPrint name={this.props.plan.name} />
         </Content>
         <Footer style={styles.footer}>
           <View style={styles.actions}>

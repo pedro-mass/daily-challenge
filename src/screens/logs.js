@@ -4,7 +4,6 @@ import { connect } from 'react-redux';
 import { Text, ListView } from 'react-native';
 import {
   Container,
-  Header,
   Content,
   List,
   ListItem,
@@ -18,6 +17,7 @@ import moment from 'moment';
 
 import { deleteLog } from '../store/logs';
 import { getFilledLogs } from '../store/selectors';
+import PlanHeader from './components/plan-header';
 
 class Logs extends Component {
   static displayName = 'Logs';
@@ -48,8 +48,7 @@ class Logs extends Component {
 
     return (
       <Container>
-        {/* Temporary header. Not sure if we'll keep it, but it does gives us a nice top margin */}
-        <Header />
+        <PlanHeader />
         <Content contentContainerStyle={styles.content}>
           <List
             dataSource={ds.cloneWithRows(this.props.logs)}

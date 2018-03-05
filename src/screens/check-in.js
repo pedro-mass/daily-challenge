@@ -4,9 +4,10 @@ import { View, Text } from 'react-native';
 import { Container, Content, Footer, Button } from 'native-base';
 import { connect } from 'react-redux';
 
-import { addLog } from '../../store/logs';
-import { getTodaysActivity } from '../../store/selectors';
-import Modal from './modal';
+import { addLog } from '../store/logs';
+import { getTodaysActivity } from '../store/selectors';
+import Modal from './components/modal';
+import PlanHeader from './components/plan-header';
 
 class CheckIn extends React.Component {
   static displayName = 'CheckIn';
@@ -48,6 +49,7 @@ class CheckIn extends React.Component {
 
     return (
       <Container>
+        <PlanHeader />
         <Content contentContainerStyle={styles.content}>
           <Modal
             isVisible={this.state.isModalVisible}
