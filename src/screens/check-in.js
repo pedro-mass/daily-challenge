@@ -1,11 +1,12 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { View, Text } from 'react-native';
-import { Container, Content, Footer, Button } from 'native-base';
+import { Container, Content } from 'native-base';
 import { connect } from 'react-redux';
 
 import { addLog } from '../store/logs';
 import { getTodaysActivity } from '../store/selectors';
+import FooterActions from '../components/footer-actions';
 import Modal from './components/modal';
 import PlanHeader from './components/plan-header';
 
@@ -68,22 +69,12 @@ class CheckIn extends React.Component {
             <Text style={styles.prompt}>today?</Text>
           </View>
         </Content>
-        <Footer>
-          <Button
-            {...this.defaultButtonProps}
-            primary
-            onPress={() => this.checkIn(activity, true)}
-          >
-            <Text style={styles.buttonText}>YES</Text>
-          </Button>
-          <Button
-            {...this.defaultButtonProps}
-            danger
-            onPress={() => this.checkIn(activity, false)}
-          >
-            <Text style={styles.buttonText}>NO</Text>
-          </Button>
-        </Footer>
+        <FooterActions
+          acceptText="YES"
+          rejectText="NO"
+          onAccept={() => this.checkIn(activity, true)}
+          onReject={() => this.checkIn(activity, false)}
+        />
       </Container>
     );
   }
@@ -140,7 +131,6 @@ const styles = {
     alignItems: 'center',
     backgroundColor: 'white'
   },
-  actions: {},
   promptContainer: {
     flex: 1,
     justifyContent: 'center'
@@ -151,12 +141,6 @@ const styles = {
   centeredText: {
     fontSize: 40,
     textAlign: 'center'
-  },
-  button: {
-    flex: 1
-  },
-  buttonText: {
-    color: 'white'
   }
 };
 
